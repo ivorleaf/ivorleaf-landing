@@ -8,4 +8,4 @@ It is very basic in nature.
 - [x] Use Bootstrap.
 - [x] Simple, One Page.
 - [x] Make sure contact info is accurate.
-- [ ] Make the contact form functional with send notification.
+- [x] Make the contact form functional with send notification.
