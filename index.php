@@ -2,6 +2,26 @@
 Copyright (c) 2019 David S Rodriguez <david@enyutech.io>, All Rights Reserved.
 Copyright (c) 2019 Enyutech.io, All Rights Reserved.
 Copyright (c) 2019 Ivorleaf, LLC. All Rights Reserved. -->
+<?php
+if (isset($_POST['submit'])) {
+	$to = 'info@ivorleaf.com';
+	$from = 'www-data@ivorleaf.com';
+	$replyto = filter_input(INPUT_POST, 'sender'); // The sender's email address
+	$first_name = filter_input(INPUT_POST, 'first-name'); // The sender's first name
+	$last_name = filter_input(INPUT_POST, 'last-name'); // The sender's last name
+	$subject = filter_input(INPUT_POST, 'subject'); // Subject of the message.
+	$message = $first_name ." ". $last_name ." wrote the following:". "\n\n" . filter_input(INPUT_POST, 'message'); // Contents of the message.
+
+	$headers = "MIME-Version: 1.0" . "\r\n";
+	$headers .= "Content-type:text/html;charset=UTF-8" . "\r\n";
+	$headers .= "From: ". $from ."\r\n";
+	$headers .= "Reply-To:". $replyto ."\r\n";
+
+	mail($to,$subject,$message,$headers);
+	header('Location: thank_you.php');
+	exit();
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
 	<head>
@@ -11,7 +31,8 @@ Copyright (c) 2019 Ivorleaf, LLC. All Rights Reserved. -->
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 		<meta name="keywords" content="">
 		<meta name="description" content="">
-
+		<!-- socialcolor css -->
+		<link rel="stylesheet" href="/css/socialColor.css">
 		<!-- animate css -->
 		<link rel="stylesheet" href="css/animate.min.css">
 		<!-- bootstrap css -->
@@ -28,7 +49,7 @@ Copyright (c) 2019 Ivorleaf, LLC. All Rights Reserved. -->
 		<!-- start preloader -->
 		<div class="preloader">
 			<div class="sk-spinner sk-spinner-rotating-plane"></div>
-    	 </div>
+  	</div>
 		<!-- end preloader -->
 		<!-- start navigation -->
 		<nav class="navbar navbar-default navbar-fixed-top templatemo-nav" role="navigation">
@@ -43,11 +64,11 @@ Copyright (c) 2019 Ivorleaf, LLC. All Rights Reserved. -->
 				</div>
 				<div class="collapse navbar-collapse">
 					<ul class="nav navbar-nav navbar-right text-uppercase">
-						<li><a href="#home">Home</a></li>
-						<li><a href="#feature">Features</a></li>
-						<li><a href="#pricing">Pricing</a></li>
-						<li><a href="#download">Open Source</a></li>
-						<li><a href="#contact">Contact</a></li>
+						<li><a href="https://ivorleaf.com/#home">Home</a></li>
+						<li><a href="https://ivorleaf.com/#feature">Features</a></li>
+						<li><a href="https://ivorleaf.com/#pricing">Pricing</a></li>
+						<li><a href="https://ivorleaf.com/#download">Open Source</a></li>
+						<li><a href="https://ivorleaf.com/#contact">Contact</a></li>
 					</ul>
 				</div>
 			</div>
@@ -201,18 +222,21 @@ Copyright (c) 2019 Ivorleaf, LLC. All Rights Reserved. -->
 						</div>
 						<div class="col-md-6 wow fadeInUp" data-wow-delay="0.6s">
 							<div class="contact-form">
-								<form action="#" method="post">
+								<form action="index.php" method="post">
 									<div class="col-md-6">
-										<input type="text" class="form-control" name="given-name" placeholder="Name">
+										<input type="text" class="form-control" name="first-name" placeholder="First name" required>
 									</div>
 									<div class="col-md-6">
-										<input type="email" class="form-control" name="sender" placeholder="Email">
+										<input type="text" class="form-control" name="last-name" placeholder="Last name" required>
 									</div>
 									<div class="col-md-12">
-										<input type="text" class="form-control" name="subject" placeholder="Subject">
+										<input type="email" class="form-control" name="sender" placeholder="Email" required>
 									</div>
 									<div class="col-md-12">
-										<textarea class="form-control" placeholder="Message" name="message" rows="4"></textarea>
+										<input type="text" class="form-control" name="subject" placeholder="Subject" required>
+									</div>
+									<div class="col-md-12">
+										<textarea class="form-control" placeholder="Message" name="message" rows="4" required></textarea>
 									</div>
 									<div class="col-md-12">
 										<input type="submit" class="form-control text-uppercase" value="Send" name="submit">
